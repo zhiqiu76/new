@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册成功</title>
+</head>
+<body>
+    <h1>恭喜{{ uname }}， 注册成功，你的信息如下：</h1>
+    <div>
+        用户名：{{ uname }}<br>
+          密码：{{ upwd }}<br>
+          性别：{% if gender %}男{% else %}女{% endif %}<br>
+        兴趣爱好：{{interests}}<br>
+    </div>
+</body>
+</html>

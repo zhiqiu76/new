@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>问题首页</title>
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+<body>
+
+    <h1>问题列表</h1>
+    {% include 'include/include.html' with first='小明' second='小红' %}
+    <ul>
+        {% for question in questions %}
+            {% if forloop.first %}
+                <li class="big">序号-第一个：{{ forloop.counter }}：主键：{{ question.id }}；
+                    问题名称：{{ question.question_text }} 发布时间：{{ question.pub_date|date:'Y-m-d H:i:s' }}</li>
+                <p style="color: red;">{{ question.show }}</p>
+                <hr>
+             {% elif forloop.last %}
+                <li>序号-最后一个：{{ forloop.counter }}：主键：{{ question.id }}；
+                    问题名称：{{ question.question_text }} 发布时间：{{ question.pub_date|date:'Y-m-d H:i:s' }}</li>
+                <p style="color: red;">{{ question.show }}</p>
+            {% else %}
+                <li>序号：{{ forloop.counter }}：主键：{{ question.id }}；
+                    问题名称：{{ question.question_text }} 发布时间：{{ question.pub_date|date:'Y-m-d H:i:s' }}</li>
+                <p style="color: red;">{{ question.show }}</p>
+                <hr>
+            {% endif %}
+
+        {% endfor %}
+
+    </ul>
+
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }}</li>
+        {% empty %}
+             <li>当前没有用户数据。。。。</li>
+        {% endfor %}
+        <hr>
+        {% if users|length > 1 %}
+           {% for user in users %}
+                <li>{{ user.username }}</li>
+            {% endfor %}
+        {% else %}
+            <li>当前没有用户数据。。。。</li>
+        {% endif %}
+
+    </ul>
+    <hr>
+    <div>
+        <p>问题列表--测试join过滤器</p>
+        {{ questions|join:', ' }}
+    </div>
+
+    <hr>
+    {% autoescape on %}
+        <div>
+            <span>显示用户名：{{ username}}</span>
+        </div>
+    {% endautoescape %}
+    <hr>
+
+    <div>
+        <span>真实姓名：{{ realname|default:'&lt;abc>张鏊麟'}}</span>
+    </div>
+
+</body>
+<script>
+    {#alert(123)#}
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}上海尚学堂官网{% endblock %}</title>
+</head>
+<body>
+    {% block header %}
+        <header>
+            <div>
+                <ul>
+                    <li style="margin: 10px 10px;display: inline">首页</li>
+                    <li style="margin: 10px 10px;display: inline">页签一</li>
+                    <li style="margin: 10px 10px;display: inline">页签二</li>
+                </ul>
+            </div>
+        </header>
+    {% endblock %}
+    <div id="content" style="height: 550px;">
+        {% block content %}{% endblock %}
+     </div>
+    {% block footer %}
+        <footer>
+            <p>这是网址底部</p>
+        </footer>
+    {% endblock %}
+
+</body>
+</html>

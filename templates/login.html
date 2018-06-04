@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <h1>登录</h1>
+
+    <div>
+        {% if message %}
+            <p style="color: red">{{ message }}</p>
+        {% endif %}
+       <form action="{% url 'user:do_login' %}" method="post" id="userForm">
+            {% csrf_token %}
+            <p>
+                用户名：<input name="userName" id="userName" value="{{userName }}" placeholder="请输入用户名"  />
+            </p>
+            <p>
+                密码：<input type="password" id="password" name="password" value="{{password}}" placeholder="请输入密码"  />
+            </p>
+            <p>
+                <button type="button" onclick="doLogin()">登录</button>
+            </p>
+        </form>
+
+        <script>
+            function doLogin() {
+                var userName = document.getElementById("userName").value
+                if (userName == null || userName.trim().length == 0){
+                    alert("请输入用户名！")
+                    return;
+                }
+                var password = document.getElementById("password").value
+                 if (password == null || password.trim().length == 0){
+                    alert("请输入密码！")
+                    return;
+                }
+
+                document.getElementById('userForm').submit()
+
+            }
+
+            // 使用ajax优化
+
+        </script>
+
+    </div>
+</body>
+</html>

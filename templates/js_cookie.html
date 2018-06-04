@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Js Cookie操作</title>
+</head>
+<body>
+    <button onclick="setCookie('test11', 'test', 1)">设置cookie</button>
+    <button onclick="alert(getCookie('test11'))">获取cookie</button>
+    <button onclick="deleteCookie('test11')">删除cookie</button>
+
+    <button id="setCookieBtn">jQuery设置cookie</button>
+    <button id="getCookieBtn">jQuery获取cookie</button>
+    <button id="delCookieBtn">删除cookie</button>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script>
+        // 设置cookie
+        function setCookie(c_name, value, expiredays) {
+            var exdate = new Date();
+            exdate.setDate(exdate.getDate() + expiredays);
+            document.cookie = c_name + "=" + encodeURIComponent(value) +
+                ((expiredays == null) ? "" : ";expires=" + exdate.toUTCString())
+                + ";path=/"
+        }
+
+        // 获取cookie
+        function getCookie(c_name) {
+            if (document.cookie.length < 0) {
+                return "";
+            }
+            c_start = document.cookie.indexOf(c_name + "=")
+            if (c_start < 0) {
+                return "";
+            }
+
+            c_start = c_start + c_name.length + 1
+            c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) {
+                c_end = document.cookie.length
+            }
+            return decodeURIComponent(document.cookie.substring(c_start, c_end))
+        }
+
+        // 删除cookie
+        function deleteCookie(c_name){
+            setCookie(c_name, "", -1);
+        }
+
+        $(document).ready(function(){
+            // 设置cookie
+            $("#setCookieBtn").click(function(){
+                $.cookie('login', 'John', { expires: 7, path: '/' })
+            })
+
+            // 获取Cookie
+            $("#getCookieBtn").click(function(){
+                   val = $.cookie('login')
+                    alert(val)
+            })
+
+            // 删除Cookie
+            $("#delCookieBtn").click(function(){
+                $.removeCookie('login')
+            })
+        })
+
+    </script>
+
+</body>
+</html>

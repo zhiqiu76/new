@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>员工列表信息</title>
+</head>
+<body>
+    {{ request.path }}
+    <input id="csrf_token" type="hidden" value="{{ csrf_token }}" >
+    <h1>这是一个员工列表。。。</h1>
+    <table>
+        <tr>
+            <th>员工编号</th>
+            <th>员工姓名</th>
+            <th>所属部门</th>
+            <th>员工薪水</th>
+            <th>上级领导</th>
+        </tr>
+        {% for emp in items %}
+            <tr>
+                <td>{{ emp.empNo }}</td>
+                 <td>{{ emp.ename }}</td>
+                 <td>
+                     {% if emp.dept  %}
+                         {{ emp.dept.dname }}
+                     {% else %}
+                         未知
+                     {% endif %}
+                 </td>
+                 <td>{{ emp.sal }}</td>
+                 <td>
+                     {% if emp.mgr  %}
+                         {{ emp.mgr.ename }}
+                     {% else %}
+                         老大
+                     {% endif %}
+                 </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="5">
+                <img src="http://sportspic.oss-cn-shanghai.aliyuncs.com/152749496549231-1.jpg">
+            </td>
+        </tr>
+    </table>
+    <a href="{% url 'employee:test1' %}" target="_blank">跳转到反向解析的地址</a>
+    <p>
+        <input type="input" id="saleGrade">
+        <button id="getSaleGradeBtn">获取等级</button>
+        <span>获取到的等级是：<i id="grade"></i></span>
+    </p>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        $(document).ready(function(){// 页面加载完后进行调用
+            // 触发点击方法
+            $("#getSaleGradeBtn").click(function(){
+                // 根据输入的id获取到等级名称
+                var id = $("#saleGrade").val()
+                if (id == null){
+                    alert('请输入id内容');
+                    return;
+                }
+                if (isNaN(id)){ // 判断id是否是数字
+                    alert('请输入数字ID');
+                    return;
+                }
+                // 从服务器获取数据
+                // post_ajax(id)
+                get_ajax(id)
+            })
+        });
+
+        // 完整的ajax请求
+        function ajax_func(id){
+            $.ajax({
+                    url: '../findSalGrade', // 请求的url地址
+                    data: {'id': id}, // 请求的参数
+                    type: 'GET',  // 请求类型 GET, POST, PUT, DELETE
+                    dataType: 'json', // 响应的数据格式：json, xml, text, html等等
+                    beforeSend: function() { // 请求之前要干嘛
+                        console.log("请求前。。。。")
+                    },
+                    success: function(resp){ // 请求成功 status_code=200就成功
+                        {#{"code": 200, "message": "Success!", "results": s.grade}#}
+                        code = resp.code, message = resp.message, results = resp.results;
+                        console.log(code + '----' + message + '---' + results)
+                        if (code == 200){
+                            $("#grade").html(results)
+                        } else {
+                            alert(message)
+                        }
+                    },
+                    error: function (error) { // 请求失败
+                        console.log("请求错误。。。。")
+                        $("#grade").html('请求失败')
+                    }
+                })
+        }
+
+        // get简写
+        function get_ajax(id){
+            $.get('../findSalGrade', {'id': id}, function(resp){
+                    console.log(typeof resp) // 打印类型
+                    code = resp.code;
+                    message = resp.message;
+                    results = resp.results;
+                    console.log(code + '----' + message + '---' + results);
+                    if (code == 200){
+                        $("#grade").html(results);
+                    } else {
+                        $("#grade").html(message)
+                    }
+                });
+        }
+
+        // 只通过get获取json数据
+        function get_json_ajax(id){
+            // ajax请求后台
+            $.getJSON('../findSalGrade', {'id': id}, function(resp){ // 请求成功 status_code=200就成功
+                    {#{"code": 200, "message": "Success!", "results": s.grade}#}
+                    code = resp.code, message = resp.message, results = resp.results;
+                    console.log(code + '----' + message + '---' + results)
+                    if (code == 200){
+                        $("#grade").html(results)
+                    } else {
+                        $("#grade").html(message)
+                    }
+            })
+        }
+
+        // post请求后台
+        function post_ajax(id){
+            var csrf_token = $("#csrf_token").val()
+            $.post('../findSalGrade/', {'id': id, 'csrfmiddlewaretoken': csrf_token}, function(resp){ // 请求成功 status_code=200就成功
+                code = resp.code, message = resp.message, results = resp.results;
+                console.log(code + '----' + message + '---' + results);
+
+                if (code == 200){
+                    $("#grade").html(results);
+                } else {
+                     $("#grade").html(message);
+                }
+            }, 'json');
+        }
+
+
+    </script>
+</body>
+</html>

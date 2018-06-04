@@ -1,0 +1,40 @@
+
+{% extends "include/base.html" %}
+
+{% block title %}这是列表列{% endblock %}
+
+{% block content %}
+    <h1>问题列表</h1>
+    <ul>
+        {% for question in questions %}
+            {% if forloop.first %}
+                <li>序号-第一个：{{ forloop.counter }}：主键：{{ question.id }}；
+                    问题名称：{{ question.question_text }} 发布时间：{{ question.pub_date|date:'Y-m-d H:i:s' }}</li>
+                <p style="color: red;">{{ question.show }}</p>
+                <hr>
+             {% elif forloop.last %}
+                <li>序号-最后一个：{{ forloop.counter }}：主键：{{ question.id }}；
+                    问题名称：{{ question.question_text }} 发布时间：{{ question.pub_date|date:'Y-m-d H:i:s' }}</li>
+                <p style="color: red;">{{ question.show }}</p>
+            {% else %}
+                <li>序号：{{ forloop.counter }}：主键：{{ question.id }}；
+                    问题名称：{{ question.question_text }} 发布时间：{{ question.pub_date|date:'Y-m-d H:i:s' }}</li>
+                <p style="color: red;">{{ question.show }}</p>
+                <hr>
+            {% endif %}
+        {% empty %}
+            <p style="color: red;">没有查询到对应的数据</p>
+        {% endfor %}
+
+    </ul>
+{% endblock %}
+
+
+{% block footer %}
+    <h1>这是列表的底部</h1>
+{% endblock %}
+
+<div>
+    {% block header %}{{ block.super }}{% endblock %}
+
+</div>

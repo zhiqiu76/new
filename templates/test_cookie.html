@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试cookie</title>
+</head>
+<body>
+    <h1>获取cookie的内容：</h1>
+    <p id="content"></p>
+</body>
+<script>
+    window.onload = function () {
+        // 获取当前浏览器的所有cookie,使用decodeURIComponent()函数进行数据的解码
+        // ecodeURIComponent() encodeURI()
+        document.getElementById("content").innerHTML = decodeURIComponent(document.cookie)
+    }
+</script>
+</html>
+

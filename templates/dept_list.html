@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部门列表信息</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>部门编号</th>
+            <th>部门名称</th>
+            <th>部门位置</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.deptNo }}</td>
+                <td>{{ item.dname }}</td>
+                <td>{{ item.loc }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>服务端读取Cookie</title>
+</head>
+<body>
+    {% for k, v in cookies.items %}
+        cookie的键：{{ k }}, cookie的值：{{ v }}<br>
+    {% endfor %}
+</body>
+
+</html>

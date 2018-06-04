@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这是获取一键多值的结果页</title>
+</head>
+<body>
+    <p>
+
+        a的值：{% for i in a %}
+            {% if forloop.last%}
+                {{ i }}
+            {% else %}
+                {{ i }},
+            {% endif %}
+        {% endfor %}
+        
+    </p>
+    <p>
+        b的值：{{ b }}
+    </p>
+</body>
+</html>

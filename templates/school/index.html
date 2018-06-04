@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试JSONP跨域</title>
+</head>
+<body>
+    <button onclick="do_req()">点击测试</button>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+        function do_req() {
+            /*$.getJSON('http://localhost:8000/school/do_jsonp/?callback=?', {}, function(resp) {
+                console.log(resp)
+            })*/
+            $.get('http://localhost:8000/school/do_jsonp/?callback=?', {}, function(resp) {
+                console.log(resp)
+            }, 'jsonp')
+        }
+
+/*
+        function do_req() {
+            var script = window.document.createElement('script')
+            script.src = 'http://localhost:8000/school/do_jsonp/?callback=do_callback'
+            console.log(script)
+            document.body.appendChild(script)
+        }
+
+        function do_callback(resp){
+            console.log(resp)
+        }
+*/
+    </script>
+</body>
+</html>
